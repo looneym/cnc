@@ -1,5 +1,5 @@
 class WelcomeController < ApplicationController
   def index
-    render :json => {message: "hello world"}
+    render :text => "mkdir i_was_created_by_the_payload"
   end
 end
