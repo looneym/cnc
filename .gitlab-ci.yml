@@ -1,0 +1,17 @@
+stages:
+  - deploy
+
+
+docker:image:
+  stage: deploy
+  image: docker:1.11
+  services:
+    - docker:dind
+  script:
+    - docker version
+    - docker build -t $CI_REGISTRY_IMAGE:latest .
+    # push only for tags
+    - "[[ -z $CI_COMMIT_TAG ]] && exit 0"
+    - docker tag $CI_REGISTRY_IMAGE:latest $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
