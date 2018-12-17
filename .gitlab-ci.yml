@@ -1,7 +1,7 @@
 stages:
   - deploy
 
-docker:image:
+build_app_image:
   stage: deploy
   image: docker:1.11
   services:
@@ -15,7 +15,7 @@ docker:image:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - docker push cnc-app:$CI_BUILD_TAG
 
-docker:image:
+build_web_image:
   stage: deploy
   image: docker:1.11
   services:
